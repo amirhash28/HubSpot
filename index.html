@@ -11,7 +11,21 @@
   hbspt.forms.create({
 	region: "na1",
 	portalId: "19938764",
-	formId: "4271f776-7ad1-4b41-9789-2fd52c5fceae"
+	formId: "4271f776-7ad1-4b41-9789-2fd52c5fceae",
+ onFormSubmit: function ($form) {
+    // Fetch all form fields
+    let formFields = $form.serializeArray();
+    // Find the email field
+    let emailField = formFields.find(function (field) {
+      return field.name === "email";
+    });
+    // Grab the email field's value (i.e. the submitted email)
+    let submittedEmail = emailField.value;
+    // Send the identified user to Clearbit
+    clearbit.identify(submittedEmail, {
+      email: submittedEmail
+    });
+  }
 });
 </script>
 	
